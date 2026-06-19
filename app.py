@@ -234,7 +234,7 @@ def recognize(file):
 def show_spectrogram(S):
 
     fig,ax=plt.subplots(
-        figsize=(6,3)
+        figsize=(5,2)
     )
 
     ax.imshow(
@@ -254,7 +254,7 @@ def show_spectrogram(S):
 def show_constellation(peaks):
 
     fig,ax=plt.subplots(
-        figsize=(6,3)
+        figsize=(5,2)
     )
 
 
@@ -280,7 +280,7 @@ def show_constellation(peaks):
 def show_hist(offsets):
 
     fig,ax=plt.subplots(
-        figsize=(6,3)
+        figsize=(5,2)
     )
 
 
