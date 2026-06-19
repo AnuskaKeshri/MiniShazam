@@ -31,8 +31,6 @@ def load_database():
 
 database = load_database()
 
-
-
 # AUDIO PROCESSING
 
 def load_audio(file):
@@ -180,7 +178,7 @@ def match_song(hashes):
 
 
     if len(votes)==0:
-        return "No Match", len(hashes), []
+        return "No match", len(hashes), []
 
 
 
