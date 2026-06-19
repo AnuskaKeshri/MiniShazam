@@ -459,7 +459,7 @@ with tab3:
     )
 
 
-    if files and st.button("Run Batch")::
+    if files and st.button("Run Batch"):
 
 
         result=[]
