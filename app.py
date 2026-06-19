@@ -101,45 +101,39 @@ def find_peaks(
 
 
 def generate_hashes(
-        peaks,
-        fan_value=10):
+    peaks,
+    fan_value=10
+):
 
     hashes=[]
 
+    peaks = sorted(peaks)
 
     for i in range(len(peaks)):
 
-
-        t1,f1=peaks[i]
-
+        t1,f1 = peaks[i]
 
         for j in range(1,fan_value+1):
 
-            if i+j < len(peaks):
+            if i+j >= len(peaks):
+                break
 
-                t2,f2=peaks[i+j]
+            t2,f2 = peaks[i+j]
 
+            dt = t2-t1
 
-                dt=t2-t1
+            if dt <= 0:
+                continue
 
+            key = f"{f1}|{f2}|{dt}"
 
-                if dt>0:
+            h = hashlib.sha1(
+                key.encode()
+            ).hexdigest()[:20]
 
-                    key=f"{f1}|{f2}|{dt}"
-
-
-                    h=hashlib.sha1(
-                        key.encode()
-                    ).hexdigest()
-
-
-                    hashes.append(
-                        (h,t1)
-                    )
+            hashes.append((h,t1))
 
     return hashes
-
-
 
 # MATCHING
 
@@ -209,32 +203,26 @@ def match_song(hashes):
 
 def recognize(file):
 
-
     y,sr=load_audio(file)
-
 
     S=compute_spectrogram(y)
 
-
     peaks=find_peaks(S)
 
+    hashes=generate_hashes(peaks)
 
-    hashes = generate_hashes(peaks)
-
-    st.write("Generated hashes:", len(hashes))
-    
     matches = 0
-    
+
     for h,_ in hashes:
         if h in database:
             matches += 1
-    
+
+    st.write("Generated hashes:", len(hashes))
     st.write("Hashes found in DB:", matches)
-    
-    prediction,votes,offsets = match_song(
+
+    prediction,votes,offsets=match_song(
         hashes
     )
-
 
     return (
         prediction,
