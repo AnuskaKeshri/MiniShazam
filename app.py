@@ -219,10 +219,19 @@ def recognize(file):
     peaks=find_peaks(S)
 
 
-    hashes=generate_hashes(peaks)
+    hashes = generate_hashes(peaks)
 
-
-    prediction,votes,offsets=match_song(
+    st.write("Generated hashes:", len(hashes))
+    
+    matches = 0
+    
+    for h,_ in hashes:
+        if h in database:
+            matches += 1
+    
+    st.write("Hashes found in DB:", matches)
+    
+    prediction,votes,offsets = match_song(
         hashes
     )
 
