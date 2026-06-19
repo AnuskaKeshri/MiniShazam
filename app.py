@@ -233,7 +233,9 @@ def recognize(file):
 
 def show_spectrogram(S):
 
-    fig,ax=plt.subplots()
+    fig,ax=plt.subplots(
+        figsize=(6,3)
+    )
 
     ax.imshow(
         S,
@@ -251,7 +253,9 @@ def show_spectrogram(S):
 
 def show_constellation(peaks):
 
-    fig,ax=plt.subplots()
+    fig,ax=plt.subplots(
+        figsize=(6,3)
+    )
 
 
     t=[p[0] for p in peaks]
@@ -275,7 +279,9 @@ def show_constellation(peaks):
 
 def show_hist(offsets):
 
-    fig,ax=plt.subplots()
+    fig,ax=plt.subplots(
+        figsize=(6,3)
+    )
 
 
     ax.hist(
@@ -361,7 +367,7 @@ with tab2:
 
         st.audio(file)
 
-        if st.button("🎵 Identify"):
+        if st.button("Identify"):
 
             with open(
                 "temp.wav",
@@ -385,7 +391,7 @@ with tab2:
             else:
 
                 st.success(
-                    f"🎵 Identified: {os.path.splitext(prediction)[0]}"
+                    f"Identified: {os.path.splitext(prediction)[0]}"
                 )
 
                 st.metric(
