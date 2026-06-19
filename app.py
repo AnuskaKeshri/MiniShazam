@@ -211,15 +211,7 @@ def recognize(file):
 
     hashes=generate_hashes(peaks)
 
-    matches = 0
-
-    for h,_ in hashes:
-        if h in database:
-            matches += 1
-
-    st.write("Generated hashes:", len(hashes))
-    st.write("Hashes found in DB:", matches)
-
+    
     prediction,votes,offsets=match_song(
         hashes
     )
@@ -304,7 +296,7 @@ def show_hist(offsets):
 
 
 st.title(
-    "🎵 EE200 Mini Shazam"
+    "🎵Mini Shazam"
 )
 
 
