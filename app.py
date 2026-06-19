@@ -348,93 +348,78 @@ with tab1:
 
 with tab2:
 
-
     st.header(
         "Identify Audio"
     )
 
-
-    file=st.file_uploader(
+    file = st.file_uploader(
         "Upload audio",
-        type=[
-            "mp3",
-            "wav",
-            "m4a"
-        ]
+        type=["mp3","wav","m4a"]
     )
-
 
     if file:
 
         st.audio(file)
-    
-        if st.button("Identify"):
-    
+
+        if st.button("🎵 Identify"):
+
             with open(
                 "temp.wav",
                 "wb"
             ) as f:
-    
+
                 f.write(
                     file.read()
                 )
-    
+
             prediction,votes,offsets,S,peaks = recognize(
                 "temp.wav"
             )
-    
+
             if prediction == "No match":
-    
+
                 st.error(
                     "Song not found in database"
                 )
-    
+
             else:
-    
+
                 st.success(
-                    f"Identified: {os.path.splitext(prediction)[0]}"
+                    f"🎵 Identified: {os.path.splitext(prediction)[0]}"
                 )
-    
+
                 st.metric(
                     "Match Score",
                     votes
                 )
 
+                with st.expander(
+                    "Technical Details"
+                ):
 
-        c1,c2,c3=st.columns(3)
+                    st.markdown(
+                        "**Spectrogram**  \nShows how frequencies change over time."
+                    )
 
+                    st.pyplot(
+                        show_spectrogram(S)
+                    )
 
-        c1.metric(
-            "Prediction",
-            prediction
-        )
+                    st.markdown(
+                        "**Constellation Map**  \nThe fingerprint peaks extracted from the song."
+                    )
 
+                    st.pyplot(
+                        show_constellation(peaks)
+                    )
 
-        c2.metric(
-            "Votes",
-            votes
-        )
+                    st.markdown(
+                        "**Offset Histogram**  \nA strong peak indicates a confident match."
+                    )
 
-
-        c3.metric(
-            "Peaks",
-            len(peaks)
-        )
-
-
-        st.pyplot(
-            show_spectrogram(S)
-        )
-
-
-        st.pyplot(
-            show_constellation(peaks)
-        )
-
-
-        st.pyplot(
-            show_hist(offsets)
-        )
+                    st.pyplot(
+                        show_hist(offsets)
+                    )
 
 
 
