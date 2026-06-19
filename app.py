@@ -420,35 +420,34 @@ with tab2:
                     f"{confidence}%"
                 )
 
-                with st.expander(
-                    "Technical Details"
-                ):
-
-                    st.markdown(
-                        "**Spectrogram**  \nShows how frequencies change over time."
-                    )
-
-                    st.pyplot(
-                        show_spectrogram(S)
-                    )
-
-                    st.markdown(
-                        "**Constellation Map**  \nThe fingerprint peaks extracted from the song."
-                    )
-
-                    st.pyplot(
-                        show_constellation(peaks)
-                    )
-
-                    st.markdown(
-                        "**Offset Histogram**  \nA strong peak indicates a confident match."
-                    )
-
-                    st.pyplot(
-                        show_hist(offsets)
-                    )
-
-
+                st.subheader(
+                    "Technical Analysis"
+                )
+                
+                st.markdown(
+                    "**Spectrogram**  \nShows how frequencies change over time. Bright regions correspond to strong frequency components."
+                )
+                
+                st.pyplot(
+                    show_spectrogram(S)
+                )
+                
+                st.markdown(
+                    "**Constellation Map**  \nShows the peak points extracted from the spectrogram. These peaks form the song fingerprint."
+                )
+                
+                st.pyplot(
+                    show_constellation(peaks)
+                )
+                
+                st.markdown(
+                    "**Offset Histogram**  \nDisplays time-offset matches between the uploaded clip and songs in the database. A tall peak indicates a strong match."
+                )
+                
+                st.pyplot(
+                    show_hist(offsets)
+                )
+                
 
 
 # BATCH
