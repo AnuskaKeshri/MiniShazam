@@ -299,10 +299,23 @@ def show_hist(offsets):
 
 
 # UI
+def count_song_hashes():
 
+    counts = {}
+
+    for values in database.values():
+
+        for song,_ in values:
+
+            counts[song] = counts.get(song,0)+1
+
+    return counts
 
 st.title(
     "🎵Mini Shazam"
+)
+st.caption(
+    "Index a library of songs as spectrogram fingerprints and identify short audio clips against the database."
 )
 
 
@@ -320,33 +333,36 @@ tab1,tab2,tab3 = st.tabs(
 
 with tab1:
 
-
     st.header(
-        "Song Database"
+        "Library"
     )
 
+    st.info(
+        "Song indexing is managed by the admin. Upload a clip in the Identify tab to test the library."
+    )
 
-    songs=set()
+    song_counts = count_song_hashes()
 
+    cols = st.columns(4)
 
-    for value in database.values():
+    for i,(song,count) in enumerate(song_counts.items()):
 
-        for item in value:
+        with cols[i%4]:
 
-            songs.add(
-                os.path.splitext(item[0])[0]
+            st.markdown(
+                f"""
+                <div style="
+                border:1px solid #333;
+                padding:15px;
+                border-radius:12px;
+                margin-bottom:10px;
+                ">
+                <h4>{os.path.splitext(song)[0]}</h4>
+                <p>{count:,} hashes</p>
+                </div>
+                """,
+                unsafe_allow_html=True
             )
-
-
-    st.metric(
-        "Songs Indexed",
-        len(songs)
-    )
-
-
-    st.success(
-        "Database Loaded Successfully"
-    )
 
 
 
@@ -394,9 +410,14 @@ with tab2:
                     f"Identified: {os.path.splitext(prediction)[0]}"
                 )
 
+                confidence = min(
+                    100,
+                    round(votes/50)
+                )
+                
                 st.metric(
-                    "Match Score",
-                    votes
+                    "Confidence",
+                    f"{confidence}%"
                 )
 
                 with st.expander(
