@@ -497,7 +497,7 @@ with tab3:
             result.append(
                 [
                     f.name,
-                    pred
+                    os.path.splitext(pred)[0]
                 ]
             )
 
