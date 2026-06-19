@@ -366,20 +366,39 @@ with tab2:
 
     if file:
 
-
-        with open(
-            "temp.wav",
-            "wb"
-        ) as f:
-
-            f.write(
-                file.read()
+        st.audio(file)
+    
+        if st.button("Identify"):
+    
+            with open(
+                "temp.wav",
+                "wb"
+            ) as f:
+    
+                f.write(
+                    file.read()
+                )
+    
+            prediction,votes,offsets,S,peaks = recognize(
+                "temp.wav"
             )
-
-
-        prediction,votes,offsets,S,peaks = recognize(
-            "temp.wav"
-        )
+    
+            if prediction == "No match":
+    
+                st.error(
+                    "Song not found in database"
+                )
+    
+            else:
+    
+                st.success(
+                    f"Identified: {os.path.splitext(prediction)[0]}"
+                )
+    
+                st.metric(
+                    "Match Score",
+                    votes
+                )
 
 
         c1,c2,c3=st.columns(3)
@@ -440,7 +459,7 @@ with tab3:
     )
 
 
-    if files:
+    if files and st.button("Run Batch")::
 
 
         result=[]
