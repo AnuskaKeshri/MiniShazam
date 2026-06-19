@@ -193,23 +193,16 @@ def match_song(hashes):
 
 
 
-    winner=max(
-        score,
-        key=score.get
+    winner = max(
+    score,
+    key=score.get
     )
-
-
-    winner_name=os.path.splitext(
-        winner
-    )[0]
-
-
+    
     return (
-        winner_name,
+        winner,
         score[winner],
         offsets
     )
-
 
 # COMPLETE RECOGNITION
 
