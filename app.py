@@ -180,7 +180,7 @@ def match_song(hashes):
 
 
     if len(votes)==0:
-        return "No Match",0,[]
+        return "No Match", len(hashes), []
 
 
 
