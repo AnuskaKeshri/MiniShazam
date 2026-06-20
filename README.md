@@ -48,6 +48,3 @@ The application generates:
 filename,prediction
 
 CSV format exactly as required.
-
-
-## Project Structure
