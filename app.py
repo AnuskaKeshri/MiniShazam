@@ -511,6 +511,7 @@ with tab3:
             ]
         )
 
+        df.to_csv("results.csv", index=False)
 
         st.dataframe(df)
 
